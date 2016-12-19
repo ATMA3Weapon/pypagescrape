@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scrapekwik>
+	<website name="amazon.com">
+		<webpage name="productpage-general">
+			<pageprofile>
+				<profiledata depth="6" charset="utf-8" threshold=".90" />
+				<profilehtml>
+					<html class="" data-19ax5a9jf="">
+					 <head>
+					  <title>
+					  </title>
+					 </head>
+					 <body class="" id="">
+					  <div id="">
+					   <header class="">
+					    <div class="" id="" role="">
+					    </div>
+					   </header>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <map id="" name="">
+					    <area alt="" coords="" href="" shape="">
+					    </area>
+					   </map>
+					   <div>
+					   </div>
+					   <div id="">
+					    <div id="">
+					    </div>
+					   </div>
+					   <div id="" style="">
+					   </div>
+					   <div class="">
+					    <div class="" data-feature-name="" id="">
+					    </div>
+					    <div class="" id="">
+					    </div>
+					    <div class="" id="">
+					    </div>
+					    <div class="" id="">
+					    </div>
+					    <div class="" id="">
+					    </div>
+					    <div class="" id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div>
+					    </div>
+					    <div>
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <hr class="" noshade="" size=""/>
+					    <div id="" style="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <div>
+					    </div>
+					    <div id="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <table align="" border="" cellpadding="" cellspacing="">
+					    </table>
+					    <div style="">
+					    </div>
+					    <div style="">
+					    </div>
+					    <div id="">
+					    </div>
+					    <center>
+					    </center>
+					    <br/>
+					    <br/>
+					    <div id="" style="">
+					    </div>
+					    <br/>
+					    <div id="" role="">
+					    </div>
+					    <div id="" style="">
+					    </div>
+					    <input id="" name="" type=""/>
+					    <div id="">
+					    </div>
+					   </div>
+					  </div>
+					  <div id="" style="">
+					  </div>
+					 </body>
+					</html>
+				</profilehtml>
+			</pageprofile>
+			<variables>
+				<var name="productname" />
+				<var name="seller" />
+				<var name="price_sale" />
+				<var name="price_listed" />
+				<var name="weight" />
+				<var name="asin" />
+				<var name="inventory" />
+				<var name="description" />
+			</variables>
+			<scrapepage>
+
+				<find tag="td" attribute="{'class': 'bucket'}"> 
+					<find tag="div" attribute="{'class': 'content'}"> 
+						<findall tag="li" attribute="{}">
+							
+							<find tag="b" text="ASIN: ">
+								<parent>
+									<innertext>
+										<savetovar location="asin" />
+									</innertext>
+								</parent>
+							</find>
+							
+							<find tag="b" text="Shipping Weight:">
+								<parent>
+									<innertext>
+										<savetovar location="weight" />
+									</innertext>
+								</parent>
+							</find>
+							
+						</findall>
+					</find>
+				</find>
+				
+				<find tag="span" attribute="{'id': 'productTitle'}">
+					<innertext>
+						<savetovar location="productname" />
+					</innertext>
+				</find>
+				
+				<find tag="div" attribute="{'id': 'merchant-info'}">
+					<innertext>
+						<savetovar location="seller" />
+					</innertext>
+				</find>
+				
+				<find tag="span" attribute="{'id': 'priceblock_ourprice'}">
+					<innertext>
+						<savetovar location="price_sale" />
+					</innertext>
+				</find>
+				
+				<find tag="td" attribute="{'class': 'a-span12 a-color-secondary a-size-base a-text-strike'}">
+					<innertext>
+						<savetovar location="price_listed" />
+					</innertext>
+				</find>
+				
+				<find tag="div" attribute="{'id': 'availability', 'class': 'a-section a-spacing-none'}">
+					<find tag="span" attribute="{}">
+						<innertext>
+							<savetovar location="inventory" />
+						</innertext>
+					</find>
+				</find>
+				
+				<find tag="div" attribute="{'id': 'productDescription', 'class': 'bucket'}">
+					<find tag="div" attribute="{'class': 'productDescriptionWrapper'}">
+						<innertext>
+							<savetovar location="description" />
+						</innertext>
+					</find>
+				</find>
+					
+			</scrapepage>
+			<filters>
+      
+			</filters>
+		</webpage>
+	</website>
+</scrapekwik>
+
+
+
+			
+			

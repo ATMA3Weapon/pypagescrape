@@ -25,7 +25,7 @@ def html_compare(threshold, html1, html2):
 	if rat >= threshold: return [True, rat]
 	else: return [False, rat]
 
-def html_profiler(depth, html, charset):
+def html_profiler(depth, html):
 	#html = str(html)
 	html = BeautifulSoup(html, "html5lib")
 	
@@ -78,24 +78,22 @@ def scrape_by_template_page(site, page, templatexml, charset, html):
 			pageprofile = foundpage.find("pageprofile")  # find the page profile section
 			variables   = foundpage.find("variables")    # find the variables section
 			searchforvar   = foundpage.find("scrapepage")    # find the search section
-			filterspage = foundpage.find("filters")      # find the filters section
 		
 			pagethreshold = float(pageprofile.profiledata.get("threshold"))
 			pagedepth     = int(pageprofile.profiledata.get("depth"))
 			
 			profiled_page = pageprofile.profilehtml.html #.prettifty() # get the profile saved from the XML file
 			profiled_page = profiled_page.prettify()
-			profiled_html = html_profiler(pagedepth, html_pretty_charset, charset) # create a profile of incoming HTML
+			profiled_html = html_profiler(pagedepth, html_pretty_charset) # create a profile of incoming HTML
 			
 			compare_html = html_compare(pagethreshold, profiled_page, profiled_html) # check if the HTML is comparable to a degree.
-
-			# create dictionary of variables'
-			for temp in variables.findAll("var"):
-				varname = str(temp['name']);
-				output[varname] = None
-
+			print compare_html
 			if compare_html[0] is True: # check if comparison meet threshold for continueing and begin stripping data. 
 				
+				# create dictionary of variables'
+				for temp in variables.findAll("var"):
+					varname = str(temp['name']);
+					output[varname] = None
 				
 				tree = lxml.etree.XML(searchforvar.prettify())
 				
@@ -140,7 +138,7 @@ def scrape_by_template_page(site, page, templatexml, charset, html):
 				
 						# are we on the first level? use the base soup.
 						if level == 1:
-							findoutput = html_soup.find(tag, attrs=context, text=textput)
+							findoutput = souped.find(tag, attrs=context, text=textput)
 						
 						# are we abpve the first level? then we use the last known find or findall parent in the stack.
 						elif level > 1:
@@ -226,69 +224,23 @@ def scrape_by_template_page(site, page, templatexml, charset, html):
 						if "location" in attrtypes:
 							location = test.attrib.get("location") # save the location were saving the BS data to
 					
-							output[location] = lastrent
+							output[location] = lastrent 
 						
 						rents.append(level)
 					
 					
 					lastlevel = level
-				
-				# lets filter that shit
-				filtertree = lxml.etree.XML(filterspage.prettify())
-				
-				rents = [] # eg: rents[2] = [find, bs4.element.tag], rents[3] = [findall, bs4.element.listoftagsorw/ethehellitis]
-				
-				lastlevel = 1
-				levelcount = 0
-				
-				for commands in filtertree.iterdescendants():
-					level = depth(commands)
-					
-					if lastlevel > level:
-						diff = lastlevel - level
-						del rents[diff:-1] # remove the old data from the stack. so were back at the reference we want.
-					
-					# get the last parent from the rents.
-					lastrent = None
-					flippedrents = rents[::-1]
-					for rentlist in flippedrents:
-						if isinstance(rentlist, list):
-							#if rentlist[2] is (bs4.element.Tag, bs4.element.ResultSet): #"soup":
-							lastrent = rentlist[2]
-							break
-					
-					#newoutput = ""
-					
-					if commands.tag in "clearwhitespace":
-						outputvar = commands.attrib.get("var")
-						if outputvar in output:
-							if output[outputvar] is not None:  
-								newoutput = output[outputvar].strip()
-								newoutput = newoutput.replace("\n", "")
-							
-								output[outputvar]  = newoutput
-					
-					elif commands.tag in "remove":
-						outputvar = commands.attrib.get("var")
-						outputtext = commands.attrib.get("text")
-					
-						if outputtext in output[outputvar]:
-							if output[outputvar] is not None: 
-								newoutput = output[outputvar].replace(outputtext, "")
-								output[outputvar]  = newoutput
-							
-				#print output
-				return output	
-	return False
+	
+	return output
 
 
-#openpage = open("B000M5U6CU.html") # open the XML file 
-#readpage = openpage.read() 
-#souped = BeautifulSoup(readpage, "html5lib")
-#
-#html_soup1 = souped.prettify()
-#
-#scrapey_file = "template.xml"
-#charset = "ISO-8859-1"
-#
-#print scrape_by_template_page("amazon.com", "productpage-general", scrapey_file, charset, readpage)
+openpage = open("exmaple_amazon_page.html") # open the XML file 
+readpage = openpage.read() 
+souped = BeautifulSoup(readpage, "html5lib")
+
+html_soup1 = souped.prettify()
+
+scrapey_file = "template.xml"
+charset = "ISO-8859-1"
+
+print scrape_by_template_page("amazon.com", "productpage-general", scrapey_file, charset, readpage)
